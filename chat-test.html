@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Test</title>
+</head>
+<body>
+    <h1>Chat Test</h1>
+    <script type='text/javascript'>
+	function initEmbeddedMessaging() {
+		try {
+			embeddedservice_bootstrap.settings.language = document.documentElement.lang;
+
+			embeddedservice_bootstrap.init(
+				'00DS800000FjsEv',
+				'Messaging_Chat_newdev',
+				'https://espoo--newdev.sandbox.my.site.com/ESWMessagingChatnewdev1780462126978',
+				{
+					scrt2URL: 'https://espoo--newdev.sandbox.my.salesforce-scrt.com'
+				}
+			);
+		} catch (err) {
+			console.error('Error loading Embedded Messaging: ', err);
+		}
+
+		window.addEventListener("onEmbeddedMessagingReady", () => {
+                embeddedservice_bootstrap.prechatAPI.setHiddenPrechatFields({
+                    'EndUserLanguage': document.documentElement.lang,
+                    'ChatSourceURL': window.location.href
+                });
+            });
+	};
+
+	(function() {
+            try {
+                if (window.embeddedservice_bootstrap && window.embeddedservice_bootstrap.utilAPI) {
+                window.embeddedservice_bootstrap.utilAPI.removeAllComponents();
+                }
+            } catch (e) {
+                console.error('Error cleaning up Embedded Messaging: ', e);
+            }
+            var script = document.createElement('script');
+
+            script.type = 'text/javascript';
+            script.src = 'https://espoo--newdev.sandbox.my.site.com/ESWMessagingChatnewdev1780462126978/assets/js/bootstrap.min.js';
+
+            script.onload = function() {
+                initEmbeddedMessaging();
+            };
+            document.head.appendChild(script);
+	})();
+    </script>
+</body>
+</html>
